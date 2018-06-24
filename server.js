@@ -27,7 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost:27017/articlescraper");
+mongoose.connect("mongodb://localhost/articleScraper");
+
 
 // Routes
 
@@ -87,11 +88,11 @@ app.get("/scrape", function(req, res) {
         };
 
         articles.push(dataToAdd);
-       
+        console.log(articles)
       }
     });
-    return articles;
-    console.log(articles)
+    // return articles;
+    
 
     db.Article.create(articles)
     .then(function(dbArticle) {
