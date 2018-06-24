@@ -34,14 +34,19 @@
         height: 200px;
         font-size: 18px;
       }
+      .container {
+        display: flex; /* or inline-flex */
+      }
     </style>
   </head>
   <body>
     <div id="wrapper">
-      <h1>Note Scraper</h1>
-      <h2><i>If you can do this...the homework should be no problem.</i></h2>
-      <div id="articles"></div>
-      <div id="comments"></div>
+      <h1>Fantasy Baseball Scraper</h1>
+      <h2><i>The latest fantasy basbeball news here</i></h2>
+      <div class="container">
+        <div id="articles"></div>
+        <div id="comments"></div>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="app.js"></script>

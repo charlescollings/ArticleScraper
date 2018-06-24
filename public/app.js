@@ -9,7 +9,6 @@ $.getJSON("/articles", function(data) {
   }
 });
 
-
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
   // Empty the notes from the note section
@@ -26,7 +25,7 @@ $(document).on("click", "p", function() {
     .then(function(data) {
       console.log(data);
       // The title of the article
-      $("#comments").append("<h2>" + data.title + "</h2>");
+      $("#comments").append("<h2>" + data.headline + "</h2>");
       // An input to enter a new title
       $("#comments").append("<input id='titleinput' name='title' >");
       // A textarea to add a new note body
@@ -35,11 +34,11 @@ $(document).on("click", "p", function() {
       $("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
       // If there's a note in the article
-      if (data.note) {
+      if (data.comment) {
         // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
+        $("#titleinput").val(data.comment.title);
         // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
+        $("#bodyinput").val(data.comment.body);
       }
     });
 });
@@ -65,7 +64,7 @@ $(document).on("click", "#savenote", function() {
       // Log the response
       console.log(data);
       // Empty the notes section
-      $("#notes").empty();
+      $("#comments").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
