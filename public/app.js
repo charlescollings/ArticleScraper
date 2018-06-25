@@ -1,7 +1,5 @@
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
-  console.log(data)
-  console.log("articles")
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
@@ -23,7 +21,6 @@ $(document).on("click", "p", function() {
   })
     // With that done, add the note information to the page
     .then(function(data) {
-      console.log(data);
       // The title of the article
       $("#comments").append("<h2>" + data.headline + "</h2>");
       // An input to enter a new title
@@ -31,7 +28,7 @@ $(document).on("click", "p", function() {
       // A textarea to add a new note body
       $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Comment</button>");
 
       // If there's a note in the article
       if (data.comment) {
