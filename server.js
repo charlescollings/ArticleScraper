@@ -27,14 +27,15 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 // mongoose.connect("mongodb://localhost/articleScraper");
-
+let uri = 'mongodb://heroku_zcq38hst:4ocitibhse46b7ub9hn3b3sk0u@ds117711.mlab.com:17711/heroku_zcq38hst';
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articleScraper";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+// mongoose.Promise = Promise;
+// mongoose.connect(MONGODB_URI);
+mongoose.connect(uri);
 
 // Routes
 // A GET route for scraping the echoJS website
