@@ -35,10 +35,10 @@ mongoose.connect("mongodb://localhost/articleScraper");
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  axios.get("http://nytimes.com/").then(function(response) {
+  axios.get("http://www.fantasypros.com/mlb/player-news").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
-
+    // console.log($(".player-news-header a"))
   // axios.get("http://www.fantasypros.com/mlb/player-news").then(function(response) {
   //   // Then, we load that into cheerio and save it to $ for a shorthand selector
   //   console.log(response)
@@ -49,28 +49,35 @@ app.get("/scrape", function(req, res) {
 
     // Now, find and loop through each element that has the "theme-summary" class
     // (i.e, the section holding the articles)
-    $(".theme-summary").each(function(i, element) {
+    $(".player-news-header span a").each(function(i, element) {
       // In each .theme-summary, we grab the child with the class story-heading
-
+      // console.log(this.parent.parent.parent.next.children[0].data);
       // Then we grab the inner text of the this element and store it
       // to the head variable. This is the article headline
-      var head = $(this)
-        .children(".story-heading")
-        .text()
-        .trim();
+      var head = (this)
+        .children[0]
+        .data;
+
+        //console.log(head)
 
       // Grab the URL of the article
-      var url = $(this)
-        .children(".story-heading")
-        .children("a")
-        .attr("href");
+      var url = (this)
+        .attribs
+        .href;
+
+        // console.log(url)
 
       // Then we grab any children with the class of summary and then grab it's inner text
       // We store this to the sum variable. This is the article summary
-      var sum = $(this)
-        .children(".summary")
-        .text()
-        .trim();
+      var sum = (this)
+        .parent
+        .parent
+        .parent
+        .next
+        .children[0]
+        .data
+
+        console.log(sum)
 
       // So long as our headline and sum and url aren't empty or undefined, do the following
       if (head && sum && url) {
@@ -88,7 +95,7 @@ app.get("/scrape", function(req, res) {
         };
 
         articles.push(dataToAdd);
-        console.log(articles)
+        // console.log(articles)
       }
     });
     // return articles;
@@ -97,7 +104,7 @@ app.get("/scrape", function(req, res) {
     db.Article.create(articles)
     .then(function(dbArticle) {
       // View the added result in the console
-      console.log(dbArticle);
+      // console.log(dbArticle);
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
